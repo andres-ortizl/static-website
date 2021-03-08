@@ -1,0 +1,47 @@
+name: Deploy blog
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Pull source
+        uses: actions/checkout@master
+
+      - name: Pull theme
+        uses: actions/checkout@v2
+        with:
+          repository: 'A-Ortiz-L/hugo-theme'
+          ref: 'master'
+          path: 'themes/hugo-starter-theme'
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2.2.2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo -t hugo-starter-theme --gc --minify
+
+      - uses: secrethub/actions/env-export@v0.1.0
+          env:
+            SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_SV_ACC }}
+            KEY: secrethub://andresauriortiz/github/web_deploy_key
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${KEY}
+
+      - name: Deploy script
+        uses: peaceiris/actions-gh-pages@v2.5.0
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          EXTERNAL_REPOSITORY: A-Ortiz-L.github.io
+          PUBLISH_BRANCH: master
+          PUBLISH_DIR: ./public
