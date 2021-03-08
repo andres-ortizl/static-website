@@ -37,6 +37,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${KEY}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       - name: Deploy script
         uses: peaceiris/actions-gh-pages@v2.5.0
