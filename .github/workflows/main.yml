@@ -1,4 +1,4 @@
-name: Deploy blog
+name: Deploy static site
 on:
   push:
     branches:
@@ -20,7 +20,7 @@ jobs:
           path: 'themes/hugo-starter-theme'
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2.2.2
+        uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
           extended: true
