@@ -38,5 +38,5 @@ jobs:
         with:
           external_repository: A-Ortiz-L/A-Ortiz-L.github.io
           publish_branch: master
-          deploy_key: ${DEPLOY_KEY}
+          deploy_key: "$DEPLOY_KEY"
           publish_dir: ./public
