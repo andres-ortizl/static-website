@@ -33,10 +33,13 @@ jobs:
           SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_SV_ACC }}
           DEPLOY_KEY: secrethub://andresauriortiz/github/web_deploy_key:2
 
+      - name: Debug
+        run: echo "${DEPLOY_KEY}"
+
       - name: Deploy script
         uses: peaceiris/actions-gh-pages@v3
         with:
-          run: echo "${DEPLOY_KEY}"
+
           external_repository: A-Ortiz-L/A-Ortiz-L.github.io
           publish_branch: master
           deploy_key: echo "${DEPLOY_KEY}"
